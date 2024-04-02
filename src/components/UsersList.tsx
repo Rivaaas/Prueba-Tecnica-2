@@ -3,12 +3,18 @@ import React from 'react'
 import { User } from '../types.d'; // Asumiendo que User es una interfaz o un tipo definido en types.d
 
 
+interface Props {
+    users: User[]
+    showColors: Boolean
+    sortedUsers: Boolean
+    handleDelete: (email: String) => void
+}
 
-const UsersList = ({ users }) => {
+const UsersList = ({ users, showColors, sortedUsers, handleDelete }: Props) => {
 
     return (
-        <>
-            <table>
+        <div>
+            <table width="100%">
                 <thead>
                     <tr>
                         <th>Foto</th>
@@ -20,25 +26,35 @@ const UsersList = ({ users }) => {
                 </thead>
                 <tbody>
                     {
-                        users.map(user => {
+                        users.map((user, index) => {
+                            const backgroundColor = index % 2 === 0 ? '#333' : '#555'
+                            const color = showColors ? backgroundColor : 'transparent'
                             return (
-                                <tr key={user.id}>
+                                <tr key={user.email} style={{ backgroundColor: color }}>
                                     <td>
-                                        <img src={ } />||
+                                        <img src={user.picture.thumbnail} />
                                     </td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
+                                    <td>
+                                        {user.name.first}
+                                    </td>
+                                    <td>
+                                        {user.name.last}
+                                    </td>
+                                    <td>
+                                        {user.location.country}
+                                    </td>
+                                    <td>
+                                        <button onClick={() => {
+                                            handleDelete(user.email)
+                                        }}>Borrar</button>
+                                    </td>
                                 </tr>
                             )
                         })
                     }
                 </tbody>
-
-
-
             </table>
-        </>
+        </div>
     )
 }
 
