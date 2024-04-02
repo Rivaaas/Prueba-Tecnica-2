@@ -36,11 +36,11 @@ function App() {
       })
   }, [])
 
-  const filteredUsers =  filterCountry != null && filterCountry.length > 0
-  ? users.filter(user => {
-    return user.location.country.toLowerCase().includes(filterCountry.toLowerCase())
-  })
-  : users
+  const filteredUsers = filterCountry != null && filterCountry.length > 0
+    ? users.filter(user => {
+      return user.location.country.toLowerCase().includes(filterCountry.toLowerCase())
+    })
+    : users
 
   const sortedUsers = sortByCountry
     ? filteredUsers.toSorted((a, b) => {
@@ -66,38 +66,37 @@ function App() {
   }
 
 
-  
+
 
   return (
     <div className='App'>
       <h1>Administrador de usuarios</h1>
       <header>
-        <div style={{ display: 'flex', justifyContent: 'center' }}>
-          <div style={{gap: '10%'}}>
-            <button onClick={toggleColors}>
-              Colorear
-            </button>
+          <div style={{ display: 'flex', justifyContent: 'center', gap:'4%' }}>
+            <div>
+              <button onClick={toggleColors}>
+                Colorear
+              </button>
+            </div>
+            <div>
+              <button onClick={toggleSortByCountry}>
+                {
+                  sortByCountry ? 'No ordenar por pais' : 'Ordenar por pais'
+                }
+              </button>
+            </div>
+            <div>
+              <button onClick={handleReset}>
+                Resetear
+              </button>
+            </div>
+            <div>
+              <input placeholder='Buscar por pais' onChange={(e) => {
+                setFilterCountry(e.target.value)
+              }} style={{ borderRadius: '13px', width: '100%', height: '90%', backgroundColor: '#222', color:'#FFFFFF', textAlign:'center'}}>
+              </input>
+            </div>
           </div>
-          <div style={{gap: '10%'}}>
-            <button onClick={toggleSortByCountry}>
-              {
-                sortByCountry ? 'No ordenar por pais' : 'Ordenar por pais'
-              }
-            </button>
-          </div>
-          <div style={{gap: '10%'}}>
-            <button onClick={handleReset}>
-              Resetear
-            </button>
-          </div>
-          <div>
-            <input placeholder='Buscar por pais' onChange={(e) => {
-              setFilterCountry(e.target.value)
-            }}>
-            
-            </input>
-          </div>
-        </div>
       </header>
       <main>
         <UsersList handleDelete={handleDelete} showColors={showColors} users={sortedUsers} />
